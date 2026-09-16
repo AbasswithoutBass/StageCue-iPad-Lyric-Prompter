@@ -6,6 +6,11 @@
   <meta name="theme-color" content="#101317" />
   <title>StageCue · 现场歌词提词器</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .exit-stage{position:fixed;z-index:6;top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));background:#1a2028e8;border-color:#47515e;color:#e7ebf0;padding:8px 12px;font-size:14px;backdrop-filter:blur(8px)}
+    .font-stepper{position:fixed;z-index:6;right:max(14px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);display:grid;gap:8px}.font-stepper button{width:48px;height:48px;padding:0;background:#1a2028e8;border-color:#47515e;color:#f1f3f6;font-weight:800;font-size:18px;backdrop-filter:blur(8px)}
+    @media(max-width:680px){.exit-stage{top:10px;left:10px;padding:7px 10px}.exit-stage span{display:none}}
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -38,6 +43,8 @@
   </main>
 
   <main id="stage" class="stage hidden">
+    <button id="exitStageBtn" class="exit-stage" aria-label="返回编辑模式">‹ <span>返回编辑</span></button>
+    <div class="font-stepper" aria-label="快速调整字号"><button id="fontDownBtn" aria-label="减小字号">A−</button><button id="fontUpBtn" aria-label="增大字号">A+</button></div>
     <div class="stage-status"><span id="currentTime">00:00.0</span><span id="nextCue">尚未开始</span></div>
     <div id="cueScroller" class="cue-scroller" tabindex="0"><div id="cueList"></div></div>
     <div class="stage-controls">
