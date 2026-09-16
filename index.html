@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#101317" />
+  <title>StageCue · 现场歌词提词器</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">STAGE<span>CUE</span><small>现场歌词提词器</small></div>
+    <div class="mode-switch" role="group" aria-label="模式">
+      <button id="editModeBtn" class="active">编辑</button><button id="showModeBtn">演出</button>
+    </div>
+    <div class="header-actions">
+      <button id="openSettingsBtn" title="演出设置">设置</button>
+      <button id="fullscreenBtn" title="全屏">全屏</button>
+    </div>
+  </header>
+
+  <main id="editor" class="editor">
+    <section class="card import-card">
+      <h1>新建演出歌词</h1>
+      <p>支持导入带时间戳的 <b>.lrc</b> 文件，也可直接粘贴或逐句编辑。</p>
+      <div class="import-actions">
+        <label class="primary file-label">导入 LRC 文件<input id="lrcFile" type="file" accept=".lrc,text/plain" hidden></label>
+        <button id="loadDemoBtn">载入示例</button>
+        <button id="clearBtn" class="danger">清空</button>
+      </div>
+      <textarea id="pasteArea" placeholder="也可以把 LRC 内容粘贴到这里，例如：&#10;[00:12.50]第一句歌词&#10;[00:16.20]第二句歌词"></textarea>
+      <button id="parsePasteBtn">解析粘贴内容</button>
+    </section>
+    <section class="card lyrics-card">
+      <div class="section-head"><h2>歌词时间轴</h2><button id="addLineBtn">＋ 添加一句</button></div>
+      <div id="lyricsEditor" class="lyrics-editor"></div>
+    </section>
+  </main>
+
+  <main id="stage" class="stage hidden">
+    <div class="stage-status"><span id="currentTime">00:00.0</span><span id="nextCue">尚未开始</span></div>
+    <div id="cueScroller" class="cue-scroller" tabindex="0"><div id="cueList"></div></div>
+    <div class="stage-controls">
+      <button id="prevBtn">上一句</button><button id="playBtn" class="play">▶ 开始</button><button id="nextBtn">下一句</button>
+      <button id="resetBtn">↺ 重置</button>
+    </div>
+  </main>
+
+  <aside id="settings" class="settings hidden">
+    <div class="settings-head"><h2>演出设置</h2><button id="closeSettingsBtn">×</button></div>
+    <label>字号 <output id="fontSizeValue">64 px</output><input id="fontSize" type="range" min="28" max="160" value="64" /></label>
+    <label>提前显示 <output id="leadTimeValue">0.0 秒</output><input id="leadTime" type="range" min="0" max="10" step="0.1" value="0" /></label>
+    <label>行间距 <output id="lineHeightValue">1.35</output><input id="lineHeight" type="range" min="1" max="2.2" step="0.05" value="1.35" /></label>
+    <label class="check"><input id="autoScroll" type="checkbox" checked /> 自动跟随滚动</label>
+    <label class="check"><input id="wakeLock" type="checkbox" checked /> 演出时保持屏幕常亮</label>
+    <p class="help">演出模式下可直接点任一句歌词，计时会立即跳转到它的时间点，方便现场校正。</p>
+  </aside>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
