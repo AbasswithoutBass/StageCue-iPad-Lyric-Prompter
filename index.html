@@ -11,6 +11,7 @@
     .font-stepper{position:fixed;z-index:6;right:max(14px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);display:grid;gap:8px}.font-stepper button{width:48px;height:48px;padding:0;background:#1a2028e8;border-color:#47515e;color:#f1f3f6;font-weight:800;font-size:18px;backdrop-filter:blur(8px)}
     @media(max-width:680px){.exit-stage{top:10px;left:10px;padding:7px 10px}.exit-stage span{display:none}}
     .lyric-links{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px}.lyric-links a{display:flex;align-items:center;gap:8px;border:1px solid #384351;border-radius:9px;background:#171c22;color:#f1f4f7;text-decoration:none;padding:10px 13px;font-size:14px}.lyric-links a:hover{border-color:#f5a623}.lyric-links b{color:#f5a623}.lyric-links small{color:#9aa5b3;font-size:12px}
+    .song-manager{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 16px}.song-manager select,.song-manager input{background:#12161b;color:#eef1f4;border:1px solid #394452;border-radius:8px;padding:10px;font:inherit}.song-manager select{min-width:190px}.song-picker{position:fixed;z-index:7;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top))}.song-picker>button{background:#1a2028e8;border-color:#47515e;backdrop-filter:blur(8px)}.song-menu{display:none;position:absolute;right:0;top:44px;width:min(310px,78vw);max-height:58vh;overflow:auto;padding:7px;background:#1b2129;border:1px solid #46515e;border-radius:10px}.song-menu.open{display:grid;gap:5px}.song-menu button{text-align:left;background:#252d37;border-color:transparent}.song-menu button.current{border-color:#f5a623;color:#f5a623}
   </style>
 </head>
 <body>
@@ -27,16 +28,17 @@
 
   <main id="editor" class="editor">
     <section class="card import-card">
-      <h1>新建演出歌词</h1>
-      <p>支持导入带时间戳的 <b>.lrc</b> 文件，也可直接粘贴或逐句编辑。</p>
+      <h1>演出歌曲与歌词</h1>
+      <p>可提前批量导入多首带时间戳的 <b>.lrc</b> 文件；演出中随时切歌。</p>
+      <div class="song-manager"><select id="songSelect" aria-label="当前歌曲"></select><input id="songName" aria-label="歌曲名称" placeholder="当前歌曲名称" /><button id="addSongBtn">＋ 新建歌曲</button><button id="deleteSongBtn" class="danger">删除本曲</button></div>
       <div class="lyric-links" aria-label="LRC 歌词快捷导航">
-        <a href="https://dinoosauro.github.io/lrclib-get/" target="_blank" rel="noopener"><b>LRCLIB</b><small>同步歌词搜索 / 下载</small></a>
-        <a href="https://www.tboxn.com/" target="_blank" rel="noopener"><b>MusicEnc</b><small>搜索并下载 LRC</small></a>
-        <a href="https://lrclib.net/" target="_blank" rel="noopener"><b>LRC 数据库</b><small>英文歌同步歌词库</small></a>
+        <a href="https://www.9ilrc.com/" target="_blank" rel="noopener"><b>9iLRC</b><small>中文 LRC 搜索与下载</small></a>
+        <a href="https://dinoosauro.github.io/lrclib-get/" target="_blank" rel="noopener"><b>LRCLIB Get</b><small>同步歌词搜索 / 下载</small></a>
+        <a href="https://lrclib.net/" target="_blank" rel="noopener"><b>LRCLIB 数据库</b><small>英文歌同步歌词库</small></a>
         <a href="https://www.lzltool.com/" target="_blank" rel="noopener"><b>在线打轴</b><small>没有 LRC 时自己制作</small></a>
       </div>
       <div class="import-actions">
-        <label class="primary file-label">导入 LRC 文件<input id="lrcFile" type="file" accept=".lrc,text/plain" hidden></label>
+        <label class="primary file-label">批量导入 LRC<input id="lrcFile" type="file" accept=".lrc,text/plain" multiple hidden></label>
         <button id="loadDemoBtn">载入示例</button>
         <button id="clearBtn" class="danger">清空</button>
       </div>
@@ -51,6 +53,7 @@
 
   <main id="stage" class="stage hidden">
     <button id="exitStageBtn" class="exit-stage" aria-label="返回编辑模式">‹ <span>返回编辑</span></button>
+    <div class="song-picker"><button id="songMenuBtn">☰ 歌单</button><div id="songMenu" class="song-menu"></div></div>
     <div class="font-stepper" aria-label="快速调整字号"><button id="fontDownBtn" aria-label="减小字号">A−</button><button id="fontUpBtn" aria-label="增大字号">A+</button></div>
     <div class="stage-status"><span id="currentTime">00:00.0</span><span id="nextCue">尚未开始</span></div>
     <div id="cueScroller" class="cue-scroller" tabindex="0"><div id="cueList"></div></div>
