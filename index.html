@@ -29,7 +29,7 @@
   <main id="editor" class="editor">
     <section class="card import-card">
       <h1>演出歌曲与歌词</h1>
-      <p>可提前批量导入多首带时间戳的 <b>.lrc</b> 文件；演出中随时切歌。</p>
+      <p>可提前批量导入多首带时间戳的 <b>.lrc / .srt / .vtt</b> 文件；演出中随时切歌。</p>
       <div class="song-manager"><select id="songSelect" aria-label="当前歌曲"></select><input id="songName" aria-label="歌曲名称" placeholder="当前歌曲名称" /><button id="addSongBtn">＋ 新建歌曲</button><button id="deleteSongBtn" class="danger">删除本曲</button></div>
       <div class="lyric-links" aria-label="LRC 歌词快捷导航">
         <a href="https://www.9ilrc.com/" target="_blank" rel="noopener"><b>9iLRC</b><small>中文 LRC 搜索与下载</small></a>
@@ -38,7 +38,7 @@
         <a href="https://www.lzltool.com/" target="_blank" rel="noopener"><b>在线打轴</b><small>没有 LRC 时自己制作</small></a>
       </div>
       <div class="import-actions">
-        <label class="primary file-label">批量导入 LRC<input id="lrcFile" type="file" accept=".lrc,text/plain" multiple hidden></label>
+        <label class="primary file-label">批量导入歌词<input id="lrcFile" type="file" multiple hidden></label>
         <button id="loadDemoBtn">载入示例</button>
         <button id="clearBtn" class="danger">清空</button>
       </div>
